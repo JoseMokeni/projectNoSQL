@@ -8,6 +8,9 @@ COPY . ./
 
 RUN npm install
 
+# Rename .env.docker tp .env
+RUN mv .env.docker .env
+
 RUN npm run build
 
 # Serve the react app

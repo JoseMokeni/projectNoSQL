@@ -11,8 +11,6 @@ services:
       - mongo3
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    env_file:
-      - ./backend/mediateque/.env
 
   frontend:
     build:
