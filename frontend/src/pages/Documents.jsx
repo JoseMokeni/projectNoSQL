@@ -11,8 +11,9 @@ import {
   Paper,
   Chip,
   IconButton,
+  TextField,
 } from "@mui/material";
-import { Edit, Delete, Add } from "@mui/icons-material";
+import { Edit, Delete, Add, Search } from "@mui/icons-material";
 import DocumentForm from "../components/documents/DocumentForm";
 import axios from "axios";
 
@@ -20,14 +21,24 @@ const Documents = () => {
   const [documents, setDocuments] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const apiUrl = "http://localhost:5000/api/documents";
+  const apiUrl = `${process.env.REACT_APP_API_URL}/documents`;
+
   useEffect(() => {
     fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => setDocuments(data))
       .catch((err) => console.error(err));
   }, []);
+
+  const filteredDocuments = documents.filter(
+    (doc) =>
+      doc.titre.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doc.auteur.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doc.isbn.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doc.type.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleSubmit = async (documentData) => {
     try {
@@ -80,6 +91,20 @@ const Documents = () => {
         </Button>
       </Box>
 
+      {/* search field */}
+      <Box mb={3}>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Rechercher par titre, auteur, ISBN ou type..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          InputProps={{
+            startAdornment: <Search sx={{ color: "action.active", mr: 1 }} />,
+          }}
+        />
+      </Box>
+
       <Paper>
         <Table>
           <TableHead>
@@ -94,7 +119,7 @@ const Documents = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {documents.map((doc) => (
+            {filteredDocuments.map((doc) => (
               <TableRow key={doc._id}>
                 <TableCell>{doc.titre}</TableCell>
                 <TableCell>{doc.auteur}</TableCell>

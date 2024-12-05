@@ -11,16 +11,18 @@ import {
   Paper,
   Chip,
   IconButton,
+  TextField,
 } from "@mui/material";
-import { Add, Check, Delete } from "@mui/icons-material";
+import { Add, Check, Delete, Search } from "@mui/icons-material";
 import axios from "axios";
 import EmpruntForm from "../components/emprunts/EmpruntForm";
 
 const Emprunts = () => {
   const [emprunts, setEmprunts] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const apiUrl = "http://localhost:5000/api/emprunts";
+  const apiUrl = `${process.env.REACT_APP_API_URL}/emprunts`;
 
   const fetchEmprunts = async () => {
     fetch(apiUrl)
@@ -32,6 +34,21 @@ const Emprunts = () => {
   useEffect(() => {
     fetchEmprunts();
   }, []);
+
+  const filteredEmprunts = emprunts.filter(
+    (emprunt) =>
+      emprunt.document?.titre
+        ?.toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      emprunt.abonne?.nom?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      emprunt.abonne?.prenom
+        ?.toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      emprunt.abonne?.telephone
+        ?.toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      emprunt.statut?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleRetour = (id) => {
     axios.post(`${apiUrl}/${id}/retour`);
@@ -80,6 +97,20 @@ const Emprunts = () => {
         </Button>
       </Box>
 
+      {/* search field */}
+      <Box mb={3}>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Rechercher par document, abonné, téléphone ou statut..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          InputProps={{
+            startAdornment: <Search sx={{ color: "action.active", mr: 1 }} />,
+          }}
+        />
+      </Box>
+
       <Paper>
         <Table>
           <TableHead>
@@ -94,7 +125,7 @@ const Emprunts = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {emprunts.map((emprunt) => (
+            {filteredEmprunts.map((emprunt) => (
               <TableRow key={emprunt._id}>
                 <TableCell>{emprunt.document?.titre}</TableCell>
                 <TableCell>

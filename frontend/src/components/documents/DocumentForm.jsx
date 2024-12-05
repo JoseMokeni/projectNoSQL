@@ -85,6 +85,15 @@ const DocumentForm = ({ open, handleClose, document, handleSubmit }) => {
     e.preventDefault();
     if (validateForm()) {
       handleSubmit(formData);
+      // clear form
+      setFormData({
+        titre: "",
+        auteur: "",
+        type: "",
+        isbn: "",
+        date_publication: "",
+        disponible: true,
+      });
       handleClose();
     }
   };

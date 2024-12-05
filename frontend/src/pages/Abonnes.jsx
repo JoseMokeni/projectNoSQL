@@ -10,8 +10,9 @@ import {
   TableRow,
   Paper,
   IconButton,
+  TextField,
 } from "@mui/material";
-import { Edit, Delete, Add, Book } from "@mui/icons-material";
+import { Edit, Delete, Add, Book, Search } from "@mui/icons-material";
 import AbonneForm from "../components/abonnes/AbonneForm";
 
 import axios from "axios";
@@ -25,7 +26,9 @@ const Abonnes = () => {
   const [openEmprunts, setOpenEmprunts] = useState(false);
   const [selectedAbonneEmprunts, setSelectedAbonneEmprunts] = useState(null);
 
-  const apiUrl = "http://localhost:5000/api/abonnes";
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const apiUrl = `${process.env.REACT_APP_API_URL}/abonnes`;
 
   useEffect(() => {
     fetchAbonnes();
@@ -37,6 +40,13 @@ const Abonnes = () => {
       .then((res) => setAbonnes(res.data))
       .catch((err) => console.error(err));
   };
+
+  const filteredAbonnes = abonnes.filter(
+    (abonne) =>
+      abonne.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      abonne.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      abonne.telephone.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleSubmit = async (abonneData) => {
     try {
@@ -87,6 +97,20 @@ const Abonnes = () => {
         </Button>
       </Box>
 
+      {/* search field */}
+      <Box mb={3}>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Rechercher par nom, email ou téléphone..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          InputProps={{
+            startAdornment: <Search sx={{ color: "action.active", mr: 1 }} />,
+          }}
+        />
+      </Box>
+
       <Paper>
         <Table>
           <TableHead>
@@ -100,7 +124,7 @@ const Abonnes = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {abonnes.map((abonne) => (
+            {filteredAbonnes.map((abonne) => (
               <TableRow key={abonne._id}>
                 <TableCell>{abonne.nom}</TableCell>
                 <TableCell>{abonne.email}</TableCell>

@@ -15,7 +15,7 @@ const Dashboard = () => {
     empruntsEnRetard: 0,
   });
 
-  const apiUrl = "http://localhost:5000/api/stats";
+  const apiUrl = `${process.env.REACT_APP_API_URL}/stats`;
 
   useEffect(() => {
     fetch(apiUrl)
