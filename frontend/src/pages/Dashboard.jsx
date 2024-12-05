@@ -15,9 +15,10 @@ const Dashboard = () => {
     empruntsEnRetard: 0,
   });
 
-  const apiUrl = "http://localhost:5000/api/stats";
+  const apiUrl = `${process.env.REACT_APP_API_URL}/stats`;
 
   useEffect(() => {
+    console.log(process.env);
     fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => setStats(data))

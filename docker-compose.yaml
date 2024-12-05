@@ -11,8 +11,6 @@ services:
       - mongo3
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    env_file:
-      - ./backend/mediateque/.env
 
   frontend:
     build:
@@ -24,6 +22,8 @@ services:
       - backend
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    env_file:
+      - ./frontend/.env.docker
   mongo1:
     image: mongo:7.0
     command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
