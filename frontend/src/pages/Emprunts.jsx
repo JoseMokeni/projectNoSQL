@@ -20,7 +20,7 @@ const Emprunts = () => {
   const [emprunts, setEmprunts] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const apiUrl = "http://backend:5000/api/emprunts";
+  const apiUrl = "http://localhost:5000/api/emprunts";
 
   const fetchEmprunts = async () => {
     fetch(apiUrl)

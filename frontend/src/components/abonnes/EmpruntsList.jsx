@@ -18,7 +18,7 @@ import axios from "axios";
 const EmpruntsList = ({ open, handleClose, abonneId, abonneName }) => {
   const [emprunts, setEmprunts] = useState([]);
 
-  const apiUrl = "http://backend:5000/api/emprunts";
+  const apiUrl = "http://localhost:5000/api/emprunts";
 
   useEffect(() => {
     const fetchEmprunts = async () => {

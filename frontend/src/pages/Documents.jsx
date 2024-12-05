@@ -21,7 +21,7 @@ const Documents = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(null);
 
-  const apiUrl = "http://backend:5000/api/documents";
+  const apiUrl = "http://localhost:5000/api/documents";
   useEffect(() => {
     fetch(apiUrl)
       .then((res) => res.json())

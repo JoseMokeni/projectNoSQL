@@ -15,7 +15,7 @@ const Dashboard = () => {
     empruntsEnRetard: 0,
   });
 
-  const apiUrl = "http://backend:5000/api/stats";
+  const apiUrl = "http://localhost:5000/api/stats";
 
   useEffect(() => {
     fetch(apiUrl)

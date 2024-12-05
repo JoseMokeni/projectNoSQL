@@ -25,7 +25,7 @@ const Abonnes = () => {
   const [openEmprunts, setOpenEmprunts] = useState(false);
   const [selectedAbonneEmprunts, setSelectedAbonneEmprunts] = useState(null);
 
-  const apiUrl = "http://backend:5000/api/abonnes";
+  const apiUrl = "http://localhost:5000/api/abonnes";
 
   useEffect(() => {
     fetchAbonnes();

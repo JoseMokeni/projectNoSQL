@@ -26,7 +26,7 @@ const EmpruntForm = ({ open, handleClose, handleSubmit }) => {
   const [selectedAbonne, setSelectedAbonne] = useState(null);
   const [selectedDocument, setSelectedDocument] = useState(null);
 
-  const apiUrl = "http://backend:5000/api";
+  const apiUrl = "http://localhost:5000/api";
 
   const fetchAbonnes = async () => {
     try {
