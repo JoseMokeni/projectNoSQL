@@ -12,7 +12,7 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
-import { Edit, Delete, Add, Book, Search } from "@mui/icons-material";
+import { Edit, Delete, Add, Book, Search, ArrowUpward, ArrowDownward } from "@mui/icons-material";
 import AbonneForm from "../components/abonnes/AbonneForm";
 
 import axios from "axios";
@@ -27,6 +27,8 @@ const Abonnes = () => {
   const [selectedAbonneEmprunts, setSelectedAbonneEmprunts] = useState(null);
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortField, setSortField] = useState('nom');
+  const [sortDirection, setSortDirection] = useState('asc');
 
   const apiUrl = `${process.env.REACT_APP_API_URL}/abonnes`;
 
@@ -41,12 +43,28 @@ const Abonnes = () => {
       .catch((err) => console.error(err));
   };
 
-  const filteredAbonnes = abonnes.filter(
-    (abonne) =>
-      abonne.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      abonne.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      abonne.telephone.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
+
+  const filteredAndSortedAbonnes = abonnes
+    .filter(
+      (abonne) =>
+        abonne.nom.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        abonne.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        abonne.telephone.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .sort((a, b) => {
+      const direction = sortDirection === 'asc' ? 1 : -1;
+      if (a[sortField] < b[sortField]) return -1 * direction;
+      if (a[sortField] > b[sortField]) return 1 * direction;
+      return 0;
+    });
 
   const handleSubmit = async (abonneData) => {
     try {
@@ -77,6 +95,11 @@ const Abonnes = () => {
 
   const handleViewEmprunts = (id) => {
     console.log("View Emprunts", id);
+  };
+
+  const SortIcon = ({ field }) => {
+    if (sortField !== field) return null;
+    return sortDirection === 'asc' ? <ArrowUpward fontSize="small" /> : <ArrowDownward fontSize="small" />;
   };
 
   return (
@@ -115,16 +138,24 @@ const Abonnes = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Nom</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Téléphone</TableCell>
+              <TableCell onClick={() => handleSort('nom')} style={{ cursor: 'pointer' }}>
+                Nom <SortIcon field="nom" />
+              </TableCell>
+              <TableCell onClick={() => handleSort('email')} style={{ cursor: 'pointer' }}>
+                Email <SortIcon field="email" />
+              </TableCell>
+              <TableCell onClick={() => handleSort('telephone')} style={{ cursor: 'pointer' }}>
+                Téléphone <SortIcon field="telephone" />
+              </TableCell>
               <TableCell>Emprunts</TableCell>
-              <TableCell>Date d'inscription</TableCell>
+              <TableCell onClick={() => handleSort('date_inscription')} style={{ cursor: 'pointer' }}>
+                Date d'inscription <SortIcon field="date_inscription" />
+              </TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredAbonnes.map((abonne) => (
+            {filteredAndSortedAbonnes.map((abonne) => (
               <TableRow key={abonne._id}>
                 <TableCell>{abonne.nom}</TableCell>
                 <TableCell>{abonne.email}</TableCell>
