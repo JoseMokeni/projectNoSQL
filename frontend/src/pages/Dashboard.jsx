@@ -18,6 +18,7 @@ const Dashboard = () => {
   const apiUrl = `${process.env.REACT_APP_API_URL}/stats`;
 
   useEffect(() => {
+    console.log(process.env);
     fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => setStats(data))
