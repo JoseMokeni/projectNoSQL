@@ -112,12 +112,27 @@ const AbonneForm = ({ open, handleClose, abonne, handleSubmit }) => {
                 transition: 'all 0.2s',
                 '&:hover': {
                   bgcolor: 'action.hover',
+                  '& fieldset': {
+                    borderColor: 'primary.main',
+                    borderWidth: '2px',
+                  }
                 },
                 '&.Mui-focused': {
                   boxShadow: theme => `0 0 0 2px ${theme.palette.primary.main}20`,
                 },
                 '&.Mui-error': {
                   boxShadow: theme => `0 0 0 2px ${theme.palette.error.main}20`,
+                },
+                '& textarea': {
+                  transition: 'all 0.2s',
+                  '&:hover': {
+                    bgcolor: 'action.hover',
+                  }
+                }
+              },
+              '& .MuiFormLabel-root': {
+                '&.Mui-focused': {
+                  color: 'primary.main'
                 }
               },
               '& .MuiFormHelperText-root': {

@@ -130,9 +130,23 @@ const DocumentForm = ({ open, handleClose, document, handleSubmit }) => {
               transition: 'all 0.2s',
               '&:hover': {
                 bgcolor: 'action.hover',
+                '& fieldset': {
+                  borderColor: 'primary.main',
+                  borderWidth: '2px',
+                }
               },
               '&.Mui-focused': {
                 boxShadow: theme => `0 0 0 2px ${theme.palette.primary.main}20`,
+              },
+              '& .MuiSelect-select': {
+                '&:focus': {
+                  backgroundColor: 'transparent'
+                }
+              }
+            },
+            '& .MuiFormLabel-root': {
+              '&.Mui-focused': {
+                color: 'primary.main'
               }
             }
           }
@@ -227,7 +241,10 @@ const DocumentForm = ({ open, handleClose, document, handleSubmit }) => {
           sx={{ 
             borderRadius: 2,
             textTransform: 'none',
-            px: 3
+            px: 3,
+            '&:hover': {
+              backgroundColor: 'grey.100'
+            }
           }}
         >
           Annuler
@@ -239,7 +256,10 @@ const DocumentForm = ({ open, handleClose, document, handleSubmit }) => {
             borderRadius: 2,
             textTransform: 'none',
             px: 3,
-            boxShadow: 2
+            boxShadow: 2,
+            '&:hover': {
+              boxShadow: 4
+            }
           }}
         >
           {document ? "Modifier" : "Ajouter"}

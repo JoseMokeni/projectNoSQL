@@ -62,6 +62,24 @@ const EmpruntsList = ({ open, handleClose, abonneId, abonneName }) => {
           borderRadius: 2,
           overflow: 'hidden',
           boxShadow: theme => `0 8px 40px ${theme.palette.primary.main}20`,
+          '& .MuiChip-root': {
+            transition: 'all 0.2s ease',
+            fontWeight: 500,
+            '&:hover': {
+              transform: 'scale(1.05)',
+            }
+          },
+          '& .MuiTableRow-root': {
+            '&:hover': {
+              backgroundColor: 'action.hover',
+              '& .MuiTableCell-root': {
+                color: 'primary.main',
+              }
+            }
+          },
+          '& .MuiTableCell-root': {
+            transition: 'color 0.2s ease',
+          }
         }
       }}
     >
