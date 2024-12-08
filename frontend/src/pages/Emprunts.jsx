@@ -18,9 +18,11 @@ import {
   TextField,
   TableSortLabel,
 } from "@mui/material";
-import { Add, Check, Delete, Search } from "@mui/icons-material";
+import { Add, Check, Delete, Search, PictureAsPdf } from "@mui/icons-material";
 import axios from "axios";
 import EmpruntForm from "../components/emprunts/EmpruntForm";
+import { generateEmpruntsPDF } from "../utils/pdfExport";
+import { toast } from 'react-toastify';
 
 const Emprunts = () => {
   const [statusFilter, setStatusFilter] = useState("tous");
@@ -64,11 +66,17 @@ const Emprunts = () => {
   });
 
   const handleRetour = (id) => {
-    axios.post(`${apiUrl}/${id}/retour`);
-
-    setEmprunts((prev) =>
-      prev.map((e) => (e._id === id ? { ...e, statut: "retourne" } : e))
-    );
+    axios.post(`${apiUrl}/${id}/retour`)
+      .then(() => {
+        setEmprunts((prev) =>
+          prev.map((e) => (e._id === id ? { ...e, statut: "retourne" } : e))
+        );
+        toast.success('Retour enregistré avec succès');
+      })
+      .catch(err => {
+        toast.error('Erreur lors du retour');
+        console.error(err);
+      });
   };
 
   const handleDelete = (id) => {
@@ -77,8 +85,12 @@ const Emprunts = () => {
         .delete(`${apiUrl}/${id}`)
         .then(() => {
           setEmprunts((prev) => prev.filter((e) => e._id !== id));
+          toast.success('Emprunt supprimé avec succès');
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          toast.error('Erreur lors de la suppression');
+          console.error(err);
+        });
     }
   };
 
@@ -86,8 +98,10 @@ const Emprunts = () => {
     try {
       await axios.post(`${apiUrl}`, data);
       setOpenDialog(false);
-      fetchEmprunts(); // Rafraîchir la liste des emprunts
+      fetchEmprunts();
+      toast.success('Emprunt créé avec succès');
     } catch (error) {
+      toast.error('Erreur lors de la création de l\'emprunt');
       console.error("Erreur lors de la création de l'emprunt:", error);
     }
   };
@@ -130,13 +144,22 @@ const Emprunts = () => {
         mb={3}
       >
         <Typography variant="h4">Emprunts</Typography>
-        <Button
-          variant="contained"
-          startIcon={<Add />}
-          onClick={() => setOpenDialog(true)}
-        >
-          Nouvel Emprunt
-        </Button>
+        <Box display="flex" gap={2}>
+          <Button
+            variant="outlined"
+            startIcon={<PictureAsPdf />}
+            onClick={() => generateEmpruntsPDF(emprunts)}
+          >
+            Exporter PDF
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<Add />}
+            onClick={() => setOpenDialog(true)}
+          >
+            Nouvel Emprunt
+          </Button>
+        </Box>
       </Box>
 
       <Box display="flex" gap={2} mb={3}>

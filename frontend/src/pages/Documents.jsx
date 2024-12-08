@@ -18,9 +18,11 @@ import {
   InputLabel,
   TableSortLabel,
 } from "@mui/material";
-import { Edit, Delete, Add, Search } from "@mui/icons-material";
+import { Edit, Delete, Add, Search, PictureAsPdf } from "@mui/icons-material";
 import DocumentForm from "../components/documents/DocumentForm";
 import axios from "axios";
+import { generateDocumentsPDF } from "../utils/pdfExport";
+import { toast } from 'react-toastify';
 
 const Documents = () => {
   const [documents, setDocuments] = useState([]);
@@ -86,8 +88,10 @@ const Documents = () => {
     try {
       if (selectedDocument) {
         await axios.put(`${apiUrl}/${selectedDocument._id}`, documentData);
+        toast.success('Document modifié avec succès');
       } else {
         await axios.post(`${apiUrl}`, documentData);
+        toast.success('Document ajouté avec succès');
       }
       setDocuments((prev) => {
         if (selectedDocument) {
@@ -100,6 +104,7 @@ const Documents = () => {
       setOpenDialog(false);
       setSelectedDocument(null);
     } catch (error) {
+      toast.error('Une erreur est survenue');
       console.error("Erreur lors de la sauvegarde:", error);
     }
   };
@@ -109,7 +114,9 @@ const Documents = () => {
       try {
         await axios.delete(`${apiUrl}/${id}`);
         setDocuments(documents.filter((doc) => doc._id !== id));
+        toast.success('Document supprimé avec succès');
       } catch (error) {
+        toast.error('Une erreur est survenue lors de la suppression');
         console.error("Erreur lors de la suppression:", error);
       }
     }
@@ -124,13 +131,22 @@ const Documents = () => {
         mb={3}
       >
         <Typography variant="h4">Documents</Typography>
-        <Button
-          variant="contained"
-          startIcon={<Add />}
-          onClick={() => setOpenDialog(true)}
-        >
-          Nouveau Document
-        </Button>
+        <Box display="flex" gap={2}>
+          <Button
+            variant="outlined"
+            startIcon={<PictureAsPdf />}
+            onClick={() => generateDocumentsPDF(documents)}
+          >
+            Exporter PDF
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<Add />}
+            onClick={() => setOpenDialog(true)}
+          >
+            Nouveau Document
+          </Button>
+        </Box>
       </Box>
 
       {/* search field */}

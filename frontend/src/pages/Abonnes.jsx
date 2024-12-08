@@ -12,8 +12,10 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
-import { Edit, Delete, Add, Book, Search, ArrowUpward, ArrowDownward } from "@mui/icons-material";
+import { Edit, Delete, Add, Book, Search, ArrowUpward, ArrowDownward, PictureAsPdf } from "@mui/icons-material";
 import AbonneForm from "../components/abonnes/AbonneForm";
+import { generateAbonnesPDF } from "../utils/pdfExport";
+import { toast } from 'react-toastify';
 
 import axios from "axios";
 import EmpruntsList from "../components/abonnes/EmpruntsList";
@@ -70,14 +72,17 @@ const Abonnes = () => {
     try {
       if (selectedAbonne) {
         await axios.put(`${apiUrl}/${selectedAbonne._id}`, abonneData);
+        toast.success('Abonné modifié avec succès');
       } else {
         await axios.post(apiUrl, abonneData);
+        toast.success('Abonné ajouté avec succès');
       }
       setOpenDialog(false);
       setSelectedAbonne(null);
 
       fetchAbonnes();
     } catch (err) {
+      toast.error('Une erreur est survenue');
       console.error(err);
     }
   };
@@ -88,8 +93,12 @@ const Abonnes = () => {
         .delete(`${apiUrl}/${id}`)
         .then((res) => {
           setAbonnes((prev) => prev.filter((a) => a._id !== id));
+          toast.success('Abonné supprimé avec succès');
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          toast.error('Une erreur est survenue lors de la suppression');
+          console.error(err);
+        });
     }
   };
 
@@ -111,13 +120,22 @@ const Abonnes = () => {
         mb={3}
       >
         <Typography variant="h4">Abonnés</Typography>
-        <Button
-          variant="contained"
-          startIcon={<Add />}
-          onClick={() => setOpenDialog(true)}
-        >
-          Nouvel Abonné
-        </Button>
+        <Box display="flex" gap={2}>
+          <Button
+            variant="outlined"
+            startIcon={<PictureAsPdf />}
+            onClick={() => generateAbonnesPDF(abonnes)}
+          >
+            Exporter PDF
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<Add />}
+            onClick={() => setOpenDialog(true)}
+          >
+            Nouvel Abonné
+          </Button>
+        </Box>
       </Box>
 
       {/* search field */}
