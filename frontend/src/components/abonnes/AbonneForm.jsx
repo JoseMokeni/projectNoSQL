@@ -78,12 +78,55 @@ const AbonneForm = ({ open, handleClose, abonne, handleSubmit }) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>
+    <Dialog 
+      open={open} 
+      onClose={handleClose} 
+      maxWidth="sm" 
+      fullWidth
+      sx={{
+        '& .MuiDialog-paper': {
+          borderRadius: 2,
+          boxShadow: theme => `0 8px 40px ${theme.palette.primary.main}20`,
+          overflow: 'hidden'
+        }
+      }}
+    >
+      <DialogTitle sx={{ 
+        bgcolor: 'primary.main',
+        color: 'white',
+        pb: 2,
+        '& .MuiTypography-root': { fontWeight: 600 }
+      }}>
         {abonne ? "Modifier l'abonné" : "Ajouter un nouvel abonné"}
       </DialogTitle>
-      <DialogContent>
-        <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 2 }}>
+      <DialogContent sx={{ pt: 3 }}>
+        <Box 
+          component="form" 
+          noValidate 
+          onSubmit={onSubmit} 
+          sx={{ 
+            '& .MuiTextField-root': {
+              mb: 2.5,
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 2,
+                transition: 'all 0.2s',
+                '&:hover': {
+                  bgcolor: 'action.hover',
+                },
+                '&.Mui-focused': {
+                  boxShadow: theme => `0 0 0 2px ${theme.palette.primary.main}20`,
+                },
+                '&.Mui-error': {
+                  boxShadow: theme => `0 0 0 2px ${theme.palette.error.main}20`,
+                }
+              },
+              '& .MuiFormHelperText-root': {
+                mx: 0,
+                mt: 0.5
+              }
+            }
+          }}
+        >
           <TextField
             name="nom"
             label="Nom"
@@ -135,14 +178,46 @@ const AbonneForm = ({ open, handleClose, abonne, handleSubmit }) => {
             margin="normal"
             value={formData.adresse}
             onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '& textarea': {
+                  transition: 'all 0.2s',
+                  '&:hover': {
+                    bgcolor: 'action.hover',
+                  }
+                }
+              }
+            }}
           />
         </Box>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="inherit">
+      <DialogActions sx={{ 
+        p: 2.5,
+        gap: 1,
+        bgcolor: 'grey.50',
+        borderTop: '1px solid',
+        borderColor: 'divider'
+      }}>
+        <Button 
+          onClick={handleClose} 
+          sx={{ 
+            borderRadius: 2,
+            textTransform: 'none',
+            px: 3
+          }}
+        >
           Annuler
         </Button>
-        <Button onClick={onSubmit} variant="contained" color="primary">
+        <Button 
+          onClick={onSubmit} 
+          variant="contained" 
+          sx={{ 
+            borderRadius: 2,
+            textTransform: 'none',
+            px: 3,
+            boxShadow: 2
+          }}
+        >
           {abonne ? "Modifier" : "Ajouter"}
         </Button>
       </DialogActions>

@@ -99,12 +99,44 @@ const DocumentForm = ({ open, handleClose, document, handleSubmit }) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>
+    <Dialog 
+      open={open} 
+      onClose={handleClose} 
+      maxWidth="sm" 
+      fullWidth
+      sx={{
+        '& .MuiDialog-paper': {
+          borderRadius: 2,
+          boxShadow: theme => `0 8px 40px ${theme.palette.primary.main}20`,
+          overflow: 'hidden'
+        }
+      }}
+    >
+      <DialogTitle sx={{ 
+        bgcolor: 'primary.main',
+        color: 'white',
+        pb: 2,
+        '& .MuiTypography-root': { fontWeight: 600 }
+      }}>
         {document ? "Modifier le document" : "Ajouter un nouveau document"}
       </DialogTitle>
       <DialogContent>
-        <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 2 }}>
+        <Box component="form" noValidate onSubmit={onSubmit} sx={{ 
+          mt: 3,
+          '& .MuiTextField-root': {
+            mb: 2.5,
+            '& .MuiOutlinedInput-root': {
+              borderRadius: 2,
+              transition: 'all 0.2s',
+              '&:hover': {
+                bgcolor: 'action.hover',
+              },
+              '&.Mui-focused': {
+                boxShadow: theme => `0 0 0 2px ${theme.palette.primary.main}20`,
+              }
+            }
+          }
+        }}>
           <TextField
             name="titre"
             label="Titre"
@@ -183,11 +215,33 @@ const DocumentForm = ({ open, handleClose, document, handleSubmit }) => {
           </TextField>
         </Box>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="inherit">
+      <DialogActions sx={{ 
+        p: 2.5,
+        gap: 1,
+        bgcolor: 'grey.50',
+        borderTop: '1px solid',
+        borderColor: 'divider'
+      }}>
+        <Button 
+          onClick={handleClose} 
+          sx={{ 
+            borderRadius: 2,
+            textTransform: 'none',
+            px: 3
+          }}
+        >
           Annuler
         </Button>
-        <Button onClick={onSubmit} variant="contained" color="primary">
+        <Button 
+          onClick={onSubmit} 
+          variant="contained" 
+          sx={{ 
+            borderRadius: 2,
+            textTransform: 'none',
+            px: 3,
+            boxShadow: 2
+          }}
+        >
           {document ? "Modifier" : "Ajouter"}
         </Button>
       </DialogActions>

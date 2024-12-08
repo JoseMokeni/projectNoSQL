@@ -52,23 +52,55 @@ const EmpruntsList = ({ open, handleClose, abonneId, abonneName }) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
-      <DialogTitle
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Typography>Emprunts de {abonneName}</Typography>
-        <IconButton onClick={handleClose}>
+    <Dialog 
+      open={open} 
+      onClose={handleClose} 
+      maxWidth="md" 
+      fullWidth
+      sx={{
+        '& .MuiDialog-paper': {
+          borderRadius: 2,
+          overflow: 'hidden',
+          boxShadow: theme => `0 8px 40px ${theme.palette.primary.main}20`,
+        }
+      }}
+    >
+      <DialogTitle sx={{
+        bgcolor: 'primary.main',
+        color: 'white',
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        py: 2
+      }}>
+        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          Emprunts de {abonneName}
+        </Typography>
+        <IconButton 
+          onClick={handleClose}
+          sx={{ 
+            color: 'white',
+            '&:hover': { 
+              bgcolor: 'primary.dark',
+              transform: 'rotate(90deg)',
+              transition: 'all 0.3s',
+            }
+          }}
+        >
           <Close />
         </IconButton>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ p: 0 }}>
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow sx={{ 
+              bgcolor: 'primary.dark',
+              '& .MuiTableCell-head': {
+                color: 'white',
+                fontWeight: 600,
+                fontSize: '0.95rem'
+              }
+            }}>
               <TableCell>Document</TableCell>
               <TableCell>Date d'emprunt</TableCell>
               <TableCell>Date de retour prévue</TableCell>
@@ -78,7 +110,18 @@ const EmpruntsList = ({ open, handleClose, abonneId, abonneName }) => {
           </TableHead>
           <TableBody>
             {emprunts.map((emprunt) => (
-              <TableRow key={emprunt._id}>
+              <TableRow 
+                key={emprunt._id}
+                sx={{
+                  transition: 'all 0.2s',
+                  '&:hover': {
+                    bgcolor: 'action.hover',
+                    '& .MuiChip-root': {
+                      transform: 'scale(1.05)',
+                    }
+                  }
+                }}
+              >
                 <TableCell>{emprunt.document?.titre}</TableCell>
                 <TableCell>
                   {new Date(emprunt.date_emprunt).toLocaleDateString()}

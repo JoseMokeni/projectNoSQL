@@ -71,13 +71,34 @@ const EmpruntForm = ({ open, handleClose, handleSubmit }) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
-      <DialogTitle>Nouvel Emprunt</DialogTitle>
-      <DialogContent>
-        <Grid container spacing={2}>
-          {/* Liste des Abonnés */}
+    <Dialog 
+      open={open} 
+      onClose={handleClose} 
+      maxWidth="md" 
+      fullWidth
+      sx={{
+        '& .MuiDialog-paper': {
+          borderRadius: 2,
+          boxShadow: theme => `0 8px 40px ${theme.palette.primary.main}20`,
+          overflow: 'hidden'
+        }
+      }}
+    >
+      <DialogTitle sx={{ 
+        bgcolor: 'primary.main',
+        color: 'white',
+        pb: 2,
+        '& .MuiTypography-root': { fontWeight: 600 }
+      }}>
+        Nouvel Emprunt
+      </DialogTitle>
+      <DialogContent sx={{ p: 3 }}>
+        <Grid container spacing={3}>
           <Grid item xs={6}>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom sx={{ 
+              color: 'primary.main',
+              fontWeight: 500
+            }}>
               Sélectionner un abonné
             </Typography>
             <TextField
@@ -86,8 +107,36 @@ const EmpruntForm = ({ open, handleClose, handleSubmit }) => {
               value={searchAbonne}
               onChange={(e) => setSearchAbonne(e.target.value)}
               margin="normal"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  transition: 'all 0.2s',
+                  '&:hover': {
+                    bgcolor: 'action.hover',
+                  }
+                }
+              }}
             />
-            <Paper variant="outlined" sx={{ height: 400, overflow: "auto" }}>
+            <Paper sx={{ 
+              height: 400,
+              overflow: "auto",
+              borderRadius: 2,
+              border: '1px solid',
+              borderColor: 'divider',
+              '& .MuiListItem-root': {
+                borderLeft: '3px solid transparent',
+                transition: 'all 0.2s',
+                '&:hover': {
+                  borderLeftColor: 'primary.main',
+                  bgcolor: 'action.hover',
+                  transform: 'translateX(4px)',
+                },
+                '&.Mui-selected': {
+                  borderLeftColor: 'primary.main',
+                  bgcolor: 'primary.lighter',
+                }
+              }
+            }}>
               <List>
                 {filteredAbonnes.map((abonne) => (
                   <ListItem
@@ -112,7 +161,10 @@ const EmpruntForm = ({ open, handleClose, handleSubmit }) => {
 
           {/* Liste des Documents */}
           <Grid item xs={6}>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom sx={{ 
+              color: 'primary.main',
+              fontWeight: 500
+            }}>
               Sélectionner un document
             </Typography>
             <TextField
@@ -121,8 +173,36 @@ const EmpruntForm = ({ open, handleClose, handleSubmit }) => {
               value={searchDocument}
               onChange={(e) => setSearchDocument(e.target.value)}
               margin="normal"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  transition: 'all 0.2s',
+                  '&:hover': {
+                    bgcolor: 'action.hover',
+                  }
+                }
+              }}
             />
-            <Paper variant="outlined" sx={{ height: 400, overflow: "auto" }}>
+            <Paper sx={{ 
+              height: 400,
+              overflow: "auto",
+              borderRadius: 2,
+              border: '1px solid',
+              borderColor: 'divider',
+              '& .MuiListItem-root': {
+                borderLeft: '3px solid transparent',
+                transition: 'all 0.2s',
+                '&:hover': {
+                  borderLeftColor: 'primary.main',
+                  bgcolor: 'action.hover',
+                  transform: 'translateX(4px)',
+                },
+                '&.Mui-selected': {
+                  borderLeftColor: 'primary.main',
+                  bgcolor: 'primary.lighter',
+                }
+              }
+            }}>
               <List>
                 {filteredDocuments.map((document) => (
                   <ListItem
@@ -147,9 +227,14 @@ const EmpruntForm = ({ open, handleClose, handleSubmit }) => {
         </Grid>
 
         {/* Résumé de la sélection */}
-        <Box mt={2}>
-          <Typography variant="subtitle1" gutterBottom>
-            Résumé de l'emprunt :
+        <Box mt={3} p={2} sx={{ 
+          bgcolor: 'grey.50',
+          borderRadius: 2,
+          border: '1px solid',
+          borderColor: 'divider'
+        }}>
+          <Typography variant="subtitle1" gutterBottom sx={{ color: 'primary.main', fontWeight: 500 }}>
+            Résumé de l'emprunt
           </Typography>
           <Typography variant="body2">
             Abonné :{" "}
@@ -163,7 +248,13 @@ const EmpruntForm = ({ open, handleClose, handleSubmit }) => {
           </Typography>
         </Box>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ 
+        p: 2,
+        gap: 1,
+        bgcolor: 'grey.50',
+        borderTop: '1px solid',
+        borderColor: 'divider'
+      }}>
         <Button onClick={handleClose} color="inherit">
           Annuler
         </Button>

@@ -183,6 +183,15 @@ const Documents = () => {
             fontSize: '0.95rem',
             fontWeight: 600,
           },
+          '& .MuiTableSortLabel-root': {
+            color: 'white !important',
+            '&.Mui-active': {
+              color: 'white !important',
+            },
+            '& .MuiTableSortLabel-icon': {
+              color: 'white !important',
+            }
+          }
         },
         '& .MuiTableBody-root .MuiTableRow-root': {
           transition: 'all 0.3s ease',
@@ -201,8 +210,8 @@ const Documents = () => {
       }}>
         <Table>
           <TableHead>
-            <TableRow sx={{ backgroundColor: 'primary.main' }}>
-              <TableCell sx={{ color: 'white' }}>
+            <TableRow>
+              <TableCell>
                 <TableSortLabel
                   active={sortConfig.key === 'titre'}
                   direction={sortConfig.key === 'titre' ? sortConfig.direction : 'asc'}
