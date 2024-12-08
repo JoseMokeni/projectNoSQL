@@ -136,7 +136,14 @@ const Documents = () => {
       {/* search field */}
       <Box mb={3} display="flex" gap={2}>
         <TextField
-          sx={{ flex: 1 }}
+          sx={{ 
+            flex: 1,
+            '& .MuiOutlinedInput-root': {
+              '&:hover fieldset': {
+                borderColor: 'primary.main',
+              },
+            },
+          }}
           variant="outlined"
           placeholder="Rechercher par titre, auteur, ISBN ou type..."
           value={searchQuery}
@@ -145,7 +152,14 @@ const Documents = () => {
             startAdornment: <Search sx={{ color: "action.active", mr: 1 }} />,
           }}
         />
-        <FormControl sx={{ minWidth: 200 }}>
+        <FormControl sx={{ 
+          minWidth: 200,
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+              borderColor: 'primary.main',
+            },
+          },
+        }}>
           <InputLabel>Statut</InputLabel>
           <Select
             value={statusFilter}
@@ -159,62 +173,110 @@ const Documents = () => {
         </FormControl>
       </Box>
 
-      <Paper>
+      <Paper elevation={3} sx={{ 
+        borderRadius: 2, 
+        overflow: 'hidden',
+        '& .MuiTableHead-root': {
+          backgroundColor: 'primary.dark',
+          '& .MuiTableCell-head': {
+            color: 'white',
+            fontSize: '0.95rem',
+            fontWeight: 600,
+          },
+        },
+        '& .MuiTableBody-root .MuiTableRow-root': {
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            backgroundColor: 'action.hover',
+            boxShadow: '0 3px 10px rgba(0,0,0,0.1)',
+          },
+        },
+        '& .MuiChip-root': {
+          fontWeight: 500,
+          transition: 'all 0.2s ease',
+          '&:hover': {
+            transform: 'scale(1.05)',
+          },
+        },
+      }}>
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell>
+            <TableRow sx={{ backgroundColor: 'primary.main' }}>
+              <TableCell sx={{ color: 'white' }}>
                 <TableSortLabel
                   active={sortConfig.key === 'titre'}
                   direction={sortConfig.key === 'titre' ? sortConfig.direction : 'asc'}
                   onClick={() => handleSort('titre')}
+                  sx={{ '&.MuiTableSortLabel-root': { color: 'white' },
+                        '&.MuiTableSortLabel-root.Mui-active': { color: 'white' },
+                        '& .MuiTableSortLabel-icon': { color: 'white !important' } }}
                 >
                   Titre
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ color: 'white' }}>
                 <TableSortLabel
                   active={sortConfig.key === 'auteur'}
                   direction={sortConfig.key === 'auteur' ? sortConfig.direction : 'asc'}
                   onClick={() => handleSort('auteur')}
+                  sx={{ '&.MuiTableSortLabel-root': { color: 'white' },
+                        '&.MuiTableSortLabel-root.Mui-active': { color: 'white' },
+                        '& .MuiTableSortLabel-icon': { color: 'white !important' } }}
                 >
                   Auteur
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ color: 'white' }}>
                 <TableSortLabel
                   active={sortConfig.key === 'type'}
                   direction={sortConfig.key === 'type' ? sortConfig.direction : 'asc'}
                   onClick={() => handleSort('type')}
+                  sx={{ '&.MuiTableSortLabel-root': { color: 'white' },
+                        '&.MuiTableSortLabel-root.Mui-active': { color: 'white' },
+                        '& .MuiTableSortLabel-icon': { color: 'white !important' } }}
                 >
                   Type
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ color: 'white' }}>
                 <TableSortLabel
                   active={sortConfig.key === 'isbn'}
                   direction={sortConfig.key === 'isbn' ? sortConfig.direction : 'asc'}
                   onClick={() => handleSort('isbn')}
+                  sx={{ '&.MuiTableSortLabel-root': { color: 'white' },
+                        '&.MuiTableSortLabel-root.Mui-active': { color: 'white' },
+                        '& .MuiTableSortLabel-icon': { color: 'white !important' } }}
                 >
                   ISBN
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ color: 'white' }}>
                 <TableSortLabel
                   active={sortConfig.key === 'date_publication'}
                   direction={sortConfig.key === 'date_publication' ? sortConfig.direction : 'asc'}
                   onClick={() => handleSort('date_publication')}
+                  sx={{ '&.MuiTableSortLabel-root': { color: 'white' },
+                        '&.MuiTableSortLabel-root.Mui-active': { color: 'white' },
+                        '& .MuiTableSortLabel-icon': { color: 'white !important' } }}
                 >
                   Date de publication
                 </TableSortLabel>
               </TableCell>
-              <TableCell>Statut</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell sx={{ color: 'white' }}>Statut</TableCell>
+              <TableCell sx={{ color: 'white' }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {sortedAndFilteredDocuments.map((doc) => (
-              <TableRow key={doc._id}>
+              <TableRow 
+                key={doc._id}
+                sx={{ 
+                  '&:hover': { 
+                    backgroundColor: 'action.hover',
+                    transition: 'background-color 0.2s'
+                  }
+                }}
+              >
                 <TableCell>{doc.titre}</TableCell>
                 <TableCell>{doc.auteur}</TableCell>
                 <TableCell>{doc.type}</TableCell>

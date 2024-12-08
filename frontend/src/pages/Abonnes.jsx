@@ -131,10 +131,51 @@ const Abonnes = () => {
           InputProps={{
             startAdornment: <Search sx={{ color: "action.active", mr: 1 }} />,
           }}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              transition: 'all 0.2s ease',
+              '&:hover': {
+                '& fieldset': { borderColor: 'primary.main' },
+              },
+              '&.Mui-focused': {
+                '& fieldset': { borderWidth: 2 },
+              },
+            },
+          }}
         />
       </Box>
 
-      <Paper>
+      <Paper elevation={3} sx={{ 
+        borderRadius: 2, 
+        overflow: 'hidden',
+        '& .MuiTableHead-root': {
+          backgroundColor: 'primary.dark',
+          '& .MuiTableCell-head': {
+            color: 'white',
+            fontSize: '0.95rem',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'opacity 0.2s ease',
+            '&:hover': {
+              opacity: 0.9,
+            },
+          },
+        },
+        '& .MuiTableBody-root .MuiTableRow-root': {
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            backgroundColor: 'action.hover',
+            transform: 'translateX(6px)',
+          },
+        },
+        '& .MuiIconButton-root': {
+          transition: 'all 0.2s ease',
+          '&:hover': {
+            transform: 'scale(1.1)',
+            color: 'primary.main',
+          },
+        },
+      }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -156,7 +197,16 @@ const Abonnes = () => {
           </TableHead>
           <TableBody>
             {filteredAndSortedAbonnes.map((abonne) => (
-              <TableRow key={abonne._id}>
+              <TableRow 
+                key={abonne._id}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'action.hover',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }
+                }}
+              >
                 <TableCell>{abonne.nom}</TableCell>
                 <TableCell>{abonne.email}</TableCell>
                 <TableCell>{abonne.telephone}</TableCell>
@@ -165,25 +215,33 @@ const Abonnes = () => {
                   {new Date(abonne.date_inscription).toLocaleDateString()}
                 </TableCell>
                 <TableCell>
-                  <IconButton
-                    onClick={() => {
-                      setSelectedAbonne(abonne);
-                      setOpenDialog(true);
-                    }}
-                  >
-                    <Edit />
-                  </IconButton>
-                  <IconButton onClick={() => handleDelete(abonne._id)}>
-                    <Delete />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => {
-                      setSelectedAbonneEmprunts(abonne);
-                      setOpenEmprunts(true);
-                    }}
-                  >
-                    <Book />
-                  </IconButton>
+                  <Box sx={{ display: 'flex', gap: 1 }}>
+                    <IconButton 
+                      sx={{ 
+                        '&:hover': { 
+                          color: 'primary.main',
+                          transform: 'scale(1.1)'
+                        }
+                      }}
+                      onClick={() => {
+                        setSelectedAbonne(abonne);
+                        setOpenDialog(true);
+                      }}
+                    >
+                      <Edit />
+                    </IconButton>
+                    <IconButton onClick={() => handleDelete(abonne._id)}>
+                      <Delete />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => {
+                        setSelectedAbonneEmprunts(abonne);
+                        setOpenEmprunts(true);
+                      }}
+                    >
+                      <Book />
+                    </IconButton>
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}

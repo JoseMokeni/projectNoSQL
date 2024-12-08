@@ -32,38 +32,150 @@ const Dashboard = () => {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <LibraryBooks color="primary" />
-              <Typography variant="h5">{stats.totalDocuments}</Typography>
-              <Typography color="textSecondary">Documents</Typography>
+          <Card 
+            sx={{
+              p: 2,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              borderRadius: 2,
+              background: 'linear-gradient(145deg, #ffffff 0%, #f4f4f4 100%)',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-8px)',
+                boxShadow: (theme) => `0 8px 24px ${theme.palette.primary.light}40`,
+              },
+              '& .MuiSvgIcon-root': {
+                fontSize: 48,
+                transition: 'transform 0.3s ease',
+              },
+              '&:hover .MuiSvgIcon-root': {
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <CardContent sx={{ textAlign: 'center' }}>
+              <Box sx={{ mb: 2 }}>
+                <LibraryBooks color="primary" sx={{ fontSize: 40 }} />
+              </Box>
+              <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold' }}>
+                {stats.totalDocuments}
+              </Typography>
+              <Typography color="textSecondary" variant="subtitle1">
+                Documents
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <People color="primary" />
-              <Typography variant="h5">{stats.totalAbonnes}</Typography>
-              <Typography color="textSecondary">Abonnés</Typography>
+          <Card 
+            sx={{
+              p: 2,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              borderRadius: 2,
+              background: 'linear-gradient(145deg, #ffffff 0%, #f4f4f4 100%)',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-8px)',
+                boxShadow: (theme) => `0 8px 24px ${theme.palette.primary.light}40`,
+              },
+              '& .MuiSvgIcon-root': {
+                fontSize: 48,
+                transition: 'transform 0.3s ease',
+              },
+              '&:hover .MuiSvgIcon-root': {
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <CardContent sx={{ textAlign: 'center' }}>
+              <Box sx={{ mb: 2 }}>
+                <People color="primary" sx={{ fontSize: 40 }} />
+              </Box>
+              <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold' }}>
+                {stats.totalAbonnes}
+              </Typography>
+              <Typography color="textSecondary" variant="subtitle1">
+                Abonnés
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <BookmarkBorder color="primary" />
-              <Typography variant="h5">{stats.empruntsEnCours}</Typography>
-              <Typography color="textSecondary">Emprunts en cours</Typography>
+          <Card 
+            sx={{
+              p: 2,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              borderRadius: 2,
+              background: 'linear-gradient(145deg, #ffffff 0%, #f4f4f4 100%)',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-8px)',
+                boxShadow: (theme) => `0 8px 24px ${theme.palette.primary.light}40`,
+              },
+              '& .MuiSvgIcon-root': {
+                fontSize: 48,
+                transition: 'transform 0.3s ease',
+              },
+              '&:hover .MuiSvgIcon-root': {
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <CardContent sx={{ textAlign: 'center' }}>
+              <Box sx={{ mb: 2 }}>
+                <BookmarkBorder color="primary" sx={{ fontSize: 40 }} />
+              </Box>
+              <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold' }}>
+                {stats.empruntsEnCours}
+              </Typography>
+              <Typography color="textSecondary" variant="subtitle1">
+                Emprunts en cours
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Card>
-            <CardContent>
-              <Warning color="error" />
-              <Typography variant="h5">{stats.empruntsEnRetard}</Typography>
-              <Typography color="textSecondary">Retards</Typography>
+          <Card 
+            sx={{
+              p: 2,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              borderRadius: 2,
+              background: 'linear-gradient(145deg, #ffffff 0%, #f4f4f4 100%)',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-8px)',
+                boxShadow: (theme) => `0 8px 24px ${theme.palette.primary.light}40`,
+              },
+              '& .MuiSvgIcon-root': {
+                fontSize: 48,
+                transition: 'transform 0.3s ease',
+              },
+              '&:hover .MuiSvgIcon-root': {
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <CardContent sx={{ textAlign: 'center' }}>
+              <Box sx={{ mb: 2 }}>
+                <Warning color="error" sx={{ fontSize: 40 }} />
+              </Box>
+              <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold' }}>
+                {stats.empruntsEnRetard}
+              </Typography>
+              <Typography color="textSecondary" variant="subtitle1">
+                Retards
+              </Typography>
             </CardContent>
           </Card>
         </Grid>

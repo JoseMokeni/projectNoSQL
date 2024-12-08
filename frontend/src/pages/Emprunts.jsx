@@ -166,7 +166,44 @@ const Emprunts = () => {
         </FormControl>
       </Box>
 
-      <Paper>
+      <Paper elevation={3} sx={{ 
+        borderRadius: 2, 
+        overflow: 'hidden',
+        '& .MuiTableCell-head': {
+          backgroundColor: 'primary.dark',
+          color: 'white',
+          fontSize: '0.95rem',
+          fontWeight: 600,
+        },
+        '& .MuiTableSortLabel-root': {
+          color: 'white !important',
+          '&:hover': {
+            opacity: 0.8,
+          },
+        },
+        '& .MuiTableBody-root .MuiTableRow-root': {
+          '&:hover': {
+            backgroundColor: 'action.hover',
+            transform: 'scale(1.001)',
+            transition: 'all 0.3s ease',
+          },
+        },
+        '& .MuiChip-root': {
+          fontWeight: 500,
+          padding: '4px',
+          transition: 'transform 0.2s ease',
+          '&:hover': {
+            transform: 'scale(1.05)',
+          },
+        },
+        '& .MuiIconButton-root': {
+          transition: 'all 0.2s ease',
+          '&:hover': {
+            transform: 'scale(1.1)',
+            backgroundColor: 'action.selected',
+          },
+        },
+      }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -229,7 +266,16 @@ const Emprunts = () => {
           </TableHead>
           <TableBody>
             {sortData(filteredEmprunts).map((emprunt) => (
-              <TableRow key={emprunt._id}>
+              <TableRow 
+                key={emprunt._id}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'action.hover',
+                    transform: 'scale(1.002)',
+                    transition: 'all 0.2s'
+                  }
+                }}
+              >
                 <TableCell>{emprunt.document?.titre}</TableCell>
                 <TableCell>
                   {emprunt.abonne?.nom +
@@ -261,6 +307,10 @@ const Emprunts = () => {
                         ? "error"
                         : "success"
                     }
+                    sx={{ 
+                      fontWeight: 'bold',
+                      '& .MuiChip-label': { px: 2 }
+                    }}
                   />
                 </TableCell>
                 <TableCell>
