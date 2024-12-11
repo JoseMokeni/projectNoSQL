@@ -34,15 +34,34 @@ const Emprunts = () => {
 
   const apiUrl = `${process.env.REACT_APP_API_URL}/emprunts`;
 
+  const checkAndUpdateOverdueStatus = (emprunts) => {
+    const today = new Date();
+    return emprunts.map(emprunt => {
+      if (emprunt.statut === 'en_cours' && new Date(emprunt.date_retour_prevue) < today) {
+        return { ...emprunt, statut: 'en_retard' };
+      }
+      return emprunt;
+    });
+  };
+
   const fetchEmprunts = async () => {
     fetch(apiUrl)
       .then((res) => res.json())
-      .then((data) => setEmprunts(data))
+      .then((data) => {
+        const updatedEmprunts = checkAndUpdateOverdueStatus(data);
+        setEmprunts(updatedEmprunts);
+      })
       .catch((err) => console.error(err));
   };
 
   useEffect(() => {
     fetchEmprunts();
+    // Check for overdue items every minute
+    const interval = setInterval(() => {
+      setEmprunts(prev => checkAndUpdateOverdueStatus(prev));
+    }, 60000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const filteredEmprunts = emprunts.filter((emprunt) => {
